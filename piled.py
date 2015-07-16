@@ -1,4 +1,7 @@
 #led blinking
+#pin6 negativo
+#pin12 positivo+1k resistor
+
 import RPi.GPIO as gpio
 import time
 
