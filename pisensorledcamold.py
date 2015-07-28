@@ -1,4 +1,4 @@
-#adaptado de http://blog.emilioeiji.com.br/raspberry-pi-sensor-de-distancia-ultrassonico-hc-sr04/
+python#adaptado de http://blog.emilioeiji.com.br/raspberry-pi-sensor-de-distancia-ultrassonico-hc-sr04/
 #HC-SR04
 #11
 #13
@@ -7,24 +7,26 @@ import RPi.GPIO as gpio
 import time
 import picamera
 
+
 TRIG = 11 #porta11
 LED  = 12 #porta12
+IR   = 29 #porta18
 ECHO = 13 #porta13
-IR   = 29 #porta29
 PUSH = 40 #porta40
-
 
 gpio.setmode(gpio.BOARD)
 gpio.setup(TRIG,gpio.OUT)
 gpio.setup(ECHO,gpio.IN)
-gpio.setup(LED,gpio.OUT)
 gpio.setup(IR,gpio.OUT)
+gpio.setup(LED,gpio.OUT)
+gpio.output(LED,False)
+gpio.output(IR,False)
 
-gpio.setup(PUSH, gpio.IN, pull_up_down=gpio.PUD_UP)
+gpio.setup(PUSH, gpio.IN,pull_up_down=gpio.PUD_UP)
 
 try:
-	camera = picamera.PiCamera()
-
+        camera = picamera.PiCamera()
+	
 	while True:
                 print "Medindo..."
 		gpio.output(TRIG,False)
@@ -45,15 +47,20 @@ try:
 		distance = pulse_duration * 17150
 		distance = round(distance,2)
 
-		if (30 <= distance <= 40.0):
+		if (30.0 <= distance <= 40.0):
 			gpio.output(LED,True)
 			gpio.output(IR,True)
 			input_state = gpio.input(PUSH)
-			if (input_state == False)
+			if (input_state == False):
 				print "take a photo..."
+				time.sleep(5)
+				camera.capture("teste.jpg")
+				camera.stop_preview()
+				
 		else:
 			gpio.output(LED,False)
 			gpio.output(IR,False)
+
 		print "Distancia: ",distance," cm"
 
 except KeyboardInterrupt:
