@@ -12,6 +12,7 @@ TRIG = 11 #porta11
 LED  = 12 #porta12
 ECHO = 13 #porta13
 IR   = 29 #porta29
+LEDW = 31 #porta31
 PUSH = 40 #porta40
 
 
@@ -20,12 +21,20 @@ gpio.setup(TRIG,gpio.OUT)
 gpio.setup(ECHO,gpio.IN)
 gpio.setup(LED,gpio.OUT)
 gpio.setup(IR,gpio.OUT)
+gpio.setup(LEDW,gpio.OUT)
+
+gpio.output(IR,False)
+gpio.output(LEDW,False)
+gpio.output(LED,False)
 
 gpio.setup(PUSH, gpio.IN, pull_up_down=gpio.PUD_UP)
 
 try:
 	camera = picamera.PiCamera()
 	camera.start_preview()
+	gpio.output(IR,True)
+	#gpio.output(LEDW,True)
+
 	
 	while True:
 
@@ -49,9 +58,10 @@ try:
 		distance = pulse_duration * 17150
 		distance = round(distance,2)
 
-		if (50 <= distance <= 55.0):
+		if (30 <= distance <= 40.0):
 			gpio.output(LED,True)
-			gpio.output(IR,True)
+			#gpio.output(LEDW,True)
+			#gpio.output(IR,True)
 			input_state = gpio.input(PUSH)
 
 			if (input_state == False):
@@ -64,7 +74,8 @@ try:
 				
 		else:
 			gpio.output(LED,False)
-			gpio.output(IR,False)
+			#gpio.output(LEDW,False)
+			#gpio.output(IR,False)
 		#os.system("clear")
 		print "Distancia: ",distance," cm"
 	camera.stop_preview()
