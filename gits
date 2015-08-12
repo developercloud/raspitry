@@ -1,0 +1,3 @@
+git add .
+git commit "type some text and save"
+git push origin master
