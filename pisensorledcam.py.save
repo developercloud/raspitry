@@ -6,13 +6,11 @@
 import RPi.GPIO as gpio
 import time
 import picamera
-import os
 
 TRIG = 11 #porta11
 LED  = 12 #porta12
 ECHO = 13 #porta13
 IR   = 29 #porta29
-LEDW = 31 #porta31
 PUSH = 40 #porta40
 
 
@@ -21,18 +19,12 @@ gpio.setup(TRIG,gpio.OUT)
 gpio.setup(ECHO,gpio.IN)
 gpio.setup(LED,gpio.OUT)
 gpio.setup(IR,gpio.OUT)
-gpio.setup(LEDW,gpio.OUT)
-
-gpio.output(IR,False)
-gpio.output(LEDW,False)
-gpio.output(LED,False)
 
 gpio.setup(PUSH, gpio.IN, pull_up_down=gpio.PUD_UP)
 
 try:
 	camera = picamera.PiCamera()
-	camera.start_preview()
-	
+
 	while True:
                 print "Medindo..."
 		gpio.output(TRIG,False)
@@ -55,34 +47,21 @@ try:
 
 		if (30 <= distance <= 40.0):
 			gpio.output(LED,True)
+			gpio.output(IR,True)
 			input_state = gpio.input(PUSH)
-
 			if (input_state == False):
-				
-				#print "take a photo..."
 				print "take a photo..."
-
-			        gpio.output(IR,True)
-				time.sleep(0.7)
-				camera.capture("testeIR.jpg")
-				
-			        gpio.output(LEDW,True)
-				camera.capture("testeIRW.jpg")
-
-				gpio.output(IR,False)
-
-				camera.capture("testeW.jpg")
-			        gpio.output(LEDW,False)
-  
-				
+				#
+camera.start_preview()
+				time.sleep(2)
+				camera.capture("teste.jpg")
 		else:
 			gpio.output(LED,False)
+			gpio.output(IR,False)
 		print "Distancia: ",distance," cm"
-	camera.stop_preview()
 
 except KeyboardInterrupt:
 	print "Terminado!"
-
 
 finally:
 	gpio.cleanup()
