@@ -1,4 +1,4 @@
-python#adaptado de http://blog.emilioeiji.com.br/raspberry-pi-sensor-de-distancia-ultrassonico-hc-sr04/
+#adaptado de http://blog.emilioeiji.com.br/raspberry-pi-sensor-de-distancia-ultrassonico-hc-sr04/
 #HC-SR04
 #11
 #13
@@ -8,11 +8,11 @@ import time
 import picamera
 
 
-TRIG = 11 #porta11
-LED  = 12 #porta12
-IR   = 29 #porta18
-ECHO = 13 #porta13
-PUSH = 40 #porta40
+TRIG = 11 #gpio17
+LED  = 16 #gpio23
+IR   = 29 #gpio5
+ECHO = 13 #gpio27
+PUSH = 40 #gpio21
 
 gpio.setmode(gpio.BOARD)
 gpio.setup(TRIG,gpio.OUT)
