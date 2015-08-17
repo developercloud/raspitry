@@ -32,9 +32,9 @@ gpio.output(LEDG,False)
 
 gpio.setup(PUSH, gpio.IN, pull_up_down=gpio.PUD_UP)
 
-Lmax = 40.0
-Lmin = 30.0
-Lcenter = 4.0
+Lmax = 64.0
+Lmin = 56.0
+Lcenter = 3.0
 
 try:
 	camera = picamera.PiCamera()
@@ -67,7 +67,8 @@ try:
 			if (Lmin+c <= distance <= Lmax-c):
 				gpio.output(LEDG,True)
 				if (input_state == False):
-				
+					camera.stop_preview()
+
 					#print "take a photo..."
 					print "take a photo..."
 
@@ -82,6 +83,9 @@ try:
 	
 					camera.capture("testeW.jpg")
 				        gpio.output(LEDW,False)
+				
+					camera.start_preview()
+
   
 			else:
 				gpio.output(LEDG,False)
