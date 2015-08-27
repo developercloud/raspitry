@@ -36,9 +36,12 @@ Lmax = 64.0
 Lmin = 56.0
 Lcenter = 3.0
 
+name = ("captures "+time.strftime("%y-%m-%d %H %M %S"))
+
 try:
 	camera = picamera.PiCamera()
 	camera.start_preview()
+        #camera.iso = 800
 	
 	while True:
                 print "Medindo..."
@@ -74,14 +77,19 @@ try:
 
 				        gpio.output(IR,True)
 					time.sleep(0.7)
-					camera.capture("testeIR.jpg")
+					#camera.capture("testeIR.jpg")
+					camera.capture(name+" IR.jpg")
+
 				
 				        gpio.output(LEDW,True)
-					camera.capture("testeIRW.jpg")
+					#camera.capture("testeIRW.jpg")
+					camera.capture(name+" IRW.jpg")
 
 					gpio.output(IR,False)
 	
-					camera.capture("testeW.jpg")
+					#camera.capture("testeW.jpg")
+					camera.capture(name+" W.jpg")
+
 				        gpio.output(LEDW,False)
 				
 					camera.start_preview()
