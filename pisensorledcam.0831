@@ -16,12 +16,8 @@ IR   = 29 #gpio5
 LEDW = 31 #gpio6
 PUSH = 40 #gpio21
 
-R = 33 #gpio13
 
 gpio.setmode(gpio.BOARD)
-
-gpio.setup(R, gpio.OUT)
-
 gpio.setup(TRIG,gpio.OUT)
 gpio.setup(ECHO,gpio.IN)
 gpio.setup(LEDY,gpio.OUT)
@@ -80,13 +76,12 @@ try:
 					print "take a photo..."
 
 				        gpio.output(IR,True)
-					#time.sleep(0.7)
+					time.sleep(0.7)
 					#camera.capture("testeIR.jpg")
 					camera.capture(name+" IR.jpg")
 
 				
 				        gpio.output(LEDW,True)
-					gpio.output(R,True)
 					#camera.capture("testeIRW.jpg")
 					camera.capture(name+" IRW.jpg")
 
@@ -96,7 +91,6 @@ try:
 					camera.capture(name+" W.jpg")
 
 				        gpio.output(LEDW,False)
-					gpio.output(R,False)
 				
 					camera.start_preview()
 
