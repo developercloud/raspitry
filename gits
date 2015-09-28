@@ -1,3 +1,9 @@
+git rm -r capture.*
+
 git add .
+
 git commit "type some text and save"
 git push origin master
+
+date 091418192015
+
