@@ -5,5 +5,7 @@ git add .
 git commit "type some text and save"
 git push origin master
 
+sudo git ls-files --deleted | sudo xargs git rm
+
 date 091418192015
 

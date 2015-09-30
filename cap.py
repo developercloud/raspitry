@@ -1,12 +1,13 @@
-#adaptado de http://blog.emilioeiji.com.br/raspberry-pi-sensor-de-distancia-ultrassonico-hc-sr04/
-#HC-SR04
-#11
-#13
+Lmin = 40
+Lmax = 50
+Lcenter = 2.0
+
 
 import RPi.GPIO as gpio
 import time
 import picamera
 import os
+
 
 TRIG = 11 #gpio17
 LEDY  = 16 #gpio23
@@ -16,8 +17,12 @@ IR   = 29 #gpio5
 LEDW = 31 #gpio6
 PUSH = 40 #gpio21
 
+R = 33 #gpio13
 
 gpio.setmode(gpio.BOARD)
+
+gpio.setup(R, gpio.OUT)
+
 gpio.setup(TRIG,gpio.OUT)
 gpio.setup(ECHO,gpio.IN)
 gpio.setup(LEDY,gpio.OUT)
@@ -31,10 +36,6 @@ gpio.output(LEDY,False)
 gpio.output(LEDG,False)
 
 gpio.setup(PUSH, gpio.IN, pull_up_down=gpio.PUD_UP)
-
-Lmax = 64.0
-Lmin = 56.0
-Lcenter = 3.0
 
 name = ("captures "+time.strftime("%y-%m-%d %H %M %S"))
 
@@ -76,12 +77,13 @@ try:
 					print "take a photo..."
 
 				        gpio.output(IR,True)
-					time.sleep(0.7)
+					#time.sleep(0.7)
 					#camera.capture("testeIR.jpg")
 					camera.capture(name+" IR.jpg")
 
 				
 				        gpio.output(LEDW,True)
+					gpio.output(R,True)
 					#camera.capture("testeIRW.jpg")
 					camera.capture(name+" IRW.jpg")
 
@@ -91,6 +93,7 @@ try:
 					camera.capture(name+" W.jpg")
 
 				        gpio.output(LEDW,False)
+					gpio.output(R,False)
 				
 					camera.start_preview()
 
